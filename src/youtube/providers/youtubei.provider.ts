@@ -30,6 +30,7 @@ export class YoutubeiProvider {
     const video = await this.youtubeClient.getVideo(id);
     if (!video) return;
 
+    video.related.items = video.related.items.filter((r) => r instanceof VideoCompact);
     return video;
   }
 
