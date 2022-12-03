@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { MAX_PLAYLIST_VIDEOS_PAGE } from "@youtube/youtube.constants";
 import {
   Client as YoutubeiClient,
   LiveVideo,
   MixPlaylist,
+  Playlist,
   PlaylistCompact,
+  PlaylistVideos,
   Transcript,
   Video,
   VideoCompact,
@@ -39,12 +40,19 @@ export class YoutubeiProvider {
     return transcript?.map((t) => new Transcript(t));
   }
 
-  public async getPlaylistVideos(youtubePlaylistId: string): Promise<VideoCompact[]> {
-    const playlist = await this.youtubeClient.getPlaylist(youtubePlaylistId);
-    if (!playlist) return [];
-    if (playlist instanceof MixPlaylist) return playlist.videos;
+  public async getPlaylist(id: string): Promise<MixPlaylist | Playlist | undefined> {
+    const playlist = await this.youtubeClient.getPlaylist(id);
+    return playlist;
+  }
 
-    await playlist.videos.next(MAX_PLAYLIST_VIDEOS_PAGE - 1);
-    return playlist.videos.items;
+  public async getPlaylistVideosContinuation(token: string): Promise<PlaylistVideos> {
+    const playlistVideos = new PlaylistVideos({
+      client: this.youtubeClient,
+      playlist: new Playlist({ client: this.youtubeClient }),
+    });
+    playlistVideos.continuation = token;
+    await playlistVideos.next();
+
+    return playlistVideos;
   }
 }
