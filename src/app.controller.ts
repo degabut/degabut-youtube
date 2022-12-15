@@ -9,7 +9,7 @@ import {
   VideoDto,
 } from "@youtube/dtos";
 import { YoutubeiProvider } from "@youtube/providers";
-import { Playlist } from "youtubei";
+import { Playlist, PlaylistCompact } from "youtubei";
 
 import { AuthGuard } from "./guards";
 
@@ -28,6 +28,15 @@ type ContinuationQuery = {
 @Controller()
 export class AppController {
   constructor(private readonly youtubei: YoutubeiProvider) {}
+
+  @Get("/search")
+  @UseGuards(AuthGuard)
+  async search(@Query() query: SearchQuery) {
+    const result = await this.youtubei.search(query.keyword);
+    return result.map((r) =>
+      r instanceof PlaylistCompact ? PlaylistCompactDto.create(r) : VideoCompactDto.create(r),
+    );
+  }
 
   @Get("/videos/:id")
   @UseGuards(AuthGuard)

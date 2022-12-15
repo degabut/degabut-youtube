@@ -15,6 +15,14 @@ import {
 export class YoutubeiProvider {
   private readonly youtubeClient = new YoutubeiClient();
 
+  public async search(keyword: string): Promise<(VideoCompact | PlaylistCompact)[]> {
+    const result = await this.youtubeClient.search(keyword);
+    return result.items.filter(
+      (r): r is VideoCompact | PlaylistCompact =>
+        r instanceof VideoCompact || r instanceof PlaylistCompact,
+    );
+  }
+
   public async searchPlaylist(keyword: string): Promise<PlaylistCompact[]> {
     const playlist = await this.youtubeClient.search(keyword, {
       type: "playlist",
