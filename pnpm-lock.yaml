@@ -33,7 +33,7 @@ specifiers:
   ts-node: ^10.0.0
   tsconfig-paths: 4.1.0
   typescript: ^4.7.4
-  youtubei: 1.0.0-rc.7
+  youtubei: 1.0.0-rc.8
 
 dependencies:
   '@nestjs/common': 9.2.0_zjqyf46x76hyng3zndsldtoema
@@ -45,7 +45,7 @@ dependencies:
   reflect-metadata: 0.1.13
   rimraf: 3.0.2
   rxjs: 7.5.7
-  youtubei: 1.0.0-rc.7
+  youtubei: 1.0.0-rc.8
 
 devDependencies:
   '@nestjs/cli': 9.1.5
@@ -5072,8 +5072,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /youtubei/1.0.0-rc.7:
-    resolution: {integrity: sha512-dId8fWMRh8M5lYmWkDViuga1zrei3+AYe1Uwy63bt5i5JKfvcagkrf6bpOapTPJ9MEv86ta20BwgrBVQswtA9A==}
+  /youtubei/1.0.0-rc.8:
+    resolution: {integrity: sha512-whGDJb4xL7irvg9cMGmuYprHkEeYpEjJ0cHeakmcG7mL3baQaoIYnMkzeHsF4Bw1eYFrpnNMBNzoKjYJHvyZ0A==}
     dependencies:
       node-fetch: 2.6.7
       protocol-buffers: 5.0.0
