@@ -20,7 +20,11 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@youtube": ["./src/youtube"],
-      "@youtube/*": ["./src/youtube/*"]
+      "@youtube/*": ["./src/youtube/*"],
+      "@youtube-music": ["./src/youtube-music"],
+      "@youtube-music/*": ["./src/youtube-music/*"],
+      "@common": ["./src/common"],
+      "@common/*": ["./src/common/*"]
     }
   }
 }

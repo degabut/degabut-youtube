@@ -11,7 +11,7 @@ import {
 import { YoutubeiProvider } from "@youtube/providers";
 import { Playlist, PlaylistCompact } from "youtubei";
 
-import { AuthGuard } from "./guards";
+import { AuthGuard } from "../guards";
 
 type IdParams = {
   id: string;
@@ -26,7 +26,7 @@ type ContinuationQuery = {
 };
 
 @Controller()
-export class AppController {
+export class YoutubeController {
   constructor(private readonly youtubei: YoutubeiProvider) {}
 
   @Get("/search")

@@ -2,13 +2,10 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { YoutubeModule } from "@youtube/youtube.module";
 
-import { AppController } from "./app.controller";
 import { JwtAuthConfigModule } from "./config";
-import { JwtAuthProvider } from "./guards";
+import { YoutubeMusicModule } from "./youtube-music/youtube-music.module";
 
 @Module({
-  imports: [ConfigModule, JwtAuthConfigModule, YoutubeModule],
-  controllers: [AppController],
-  providers: [JwtAuthProvider],
+  imports: [ConfigModule, JwtAuthConfigModule, YoutubeModule, YoutubeMusicModule],
 })
 export class AppModule {}

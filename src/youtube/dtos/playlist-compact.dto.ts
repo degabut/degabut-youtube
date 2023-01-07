@@ -1,8 +1,8 @@
+import { ThumbnailDto } from "@common/dtos";
 import { Exclude, Expose, plainToInstance, Type } from "class-transformer";
 import { PlaylistCompact } from "youtubei";
 
 import { ChannelDto } from "./channel.dto";
-import { ThumbnailDto } from "./thumbnail.dto";
 
 @Exclude()
 export class PlaylistCompactDto {
