@@ -1,3 +1,4 @@
+import { ThumbnailDto } from "@common/dtos";
 import { Exclude, Expose, plainToInstance, Type } from "class-transformer";
 import { Playlist, PlaylistVideos } from "youtubei";
 
@@ -34,6 +35,10 @@ export class PlaylistDto {
 
   @Expose()
   viewCount!: number;
+
+  @Expose()
+  @Type(() => ThumbnailDto)
+  thumbnails!: ThumbnailDto[];
 
   @Expose()
   @Type(() => ChannelDto)
