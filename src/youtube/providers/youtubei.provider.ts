@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import {
-  Client as YoutubeiClient,
   LiveVideo,
   MixPlaylist,
   Playlist,
@@ -9,6 +8,7 @@ import {
   Transcript,
   Video,
   VideoCompact,
+  Client as YoutubeiClient,
 } from "youtubei";
 
 @Injectable()
@@ -24,15 +24,13 @@ export class YoutubeiProvider {
   }
 
   public async searchPlaylist(keyword: string): Promise<PlaylistCompact[]> {
-    const playlist = await this.youtubeClient.search(keyword, {
-      type: "playlist",
-    });
-    return playlist.items;
+    const playlist = await this.youtubeClient.search(keyword, { type: "playlist" });
+    return playlist.items.filter((p) => p instanceof PlaylistCompact);
   }
 
   public async searchVideo(keyword: string): Promise<VideoCompact[]> {
     const videos = await this.youtubeClient.search(keyword, { type: "video" });
-    return videos.items;
+    return videos.items.filter((v) => v instanceof VideoCompact);
   }
 
   public async getVideo(id: string): Promise<Video | LiveVideo | undefined> {
