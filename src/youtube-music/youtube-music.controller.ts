@@ -14,6 +14,7 @@ import {
   MusicSongCompactDto,
   MusicVideoCompactDto,
 } from "./dtos";
+import { MusicSongsDto } from "./dtos/music-songs.dto";
 import { YoutubeiMusicProvider } from "./providers";
 
 type IdParams = {
@@ -22,6 +23,10 @@ type IdParams = {
 
 type SearchQuery = {
   keyword: string;
+};
+
+type ContinuationQuery = {
+  token: string;
 };
 
 @Controller({ path: "/music" })
@@ -43,11 +48,25 @@ export class YoutubeMusicController {
     }));
   }
 
+  @Get("/songs")
+  @UseGuards(AuthGuard)
+  async searchSong(@Query() query: SearchQuery) {
+    const result = await this.youtubeiMusic.searchSong(query.keyword);
+    return MusicSongsDto.create(result);
+  }
+
   @Get("/songs/:id/lyrics")
   @UseGuards(AuthGuard)
   async getVideo(@Param() params: IdParams) {
     const lyrics = await this.youtubeiMusic.getLyrics(params.id);
     if (!lyrics) throw new NotFoundException();
     return MusicLyricsDto.create(lyrics);
+  }
+
+  @Get("/continuation/songs")
+  @UseGuards(AuthGuard)
+  async getPlaylistVideos(@Query() query: ContinuationQuery) {
+    const songs = await this.youtubeiMusic.getSearchSongContinuation(query.token);
+    return MusicSongsDto.create(songs);
   }
 }

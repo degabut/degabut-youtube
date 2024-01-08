@@ -2,13 +2,14 @@ import { Injectable } from "@nestjs/common";
 import {
   MusicAlbumCompact,
   MusicArtistCompact,
-  MusicClient as YoutubeiMusicClient,
+  MusicLyrics,
   MusicPlaylistCompact,
+  MusicSearchResult,
   MusicSongCompact,
   MusicVideoCompact,
   Shelf,
+  MusicClient as YoutubeiMusicClient,
 } from "youtubei";
-import { MusicLyrics } from "youtubei/dist/typings/music/MusicLyrics";
 
 type SearchResult = Shelf<
   MusicSongCompact[] | MusicVideoCompact[] | MusicAlbumCompact[] | MusicPlaylistCompact[]
@@ -23,7 +24,22 @@ export class YoutubeiMusicProvider {
     return result.filter((i) => !(i.items.at(0) instanceof MusicArtistCompact)) as SearchResult;
   }
 
+  public async searchSong(keyword: string) {
+    return await this.musicClient.search(keyword, "song");
+  }
+
   public async getLyrics(id: string): Promise<MusicLyrics | undefined> {
     return await this.musicClient.getLyrics(id);
+  }
+
+  public async getSearchSongContinuation(token: string) {
+    const songs = new MusicSearchResult({
+      client: this.musicClient,
+      type: "song",
+    });
+    songs.continuation = token;
+    await songs.next();
+
+    return songs;
   }
 }
