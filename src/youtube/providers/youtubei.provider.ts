@@ -5,7 +5,6 @@ import {
   Playlist,
   PlaylistCompact,
   PlaylistVideos,
-  Transcript,
   Video,
   VideoCompact,
   Client as YoutubeiClient,
@@ -39,11 +38,6 @@ export class YoutubeiProvider {
 
     video.related.items = video.related.items.filter((r) => r instanceof VideoCompact);
     return video;
-  }
-
-  public async getVideoTranscript(id: string): Promise<Transcript[] | undefined> {
-    const transcript = await this.youtubeClient.getVideoTranscript(id);
-    return transcript?.map((t) => new Transcript(t));
   }
 
   public async getPlaylist(id: string): Promise<MixPlaylist | Playlist | undefined> {

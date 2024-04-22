@@ -2,6 +2,7 @@ import { ThumbnailDto } from "@common/dtos";
 import { Exclude, Expose, plainToInstance, Type } from "class-transformer";
 import { LiveVideo, Video } from "youtubei";
 
+import { CaptionDto } from "./caption.dto";
 import { ChannelDto } from "./channel.dto";
 import { ChapterDto } from "./chapter.dto";
 import { VideoCompactDto } from "./video-compact.dto";
@@ -36,10 +37,15 @@ export class VideoDto {
   @Type(() => ChapterDto)
   chapters!: ChapterDto[];
 
+  @Expose()
+  @Type(() => CaptionDto)
+  captions!: CaptionDto[] | null;
+
   public static create(entity: Video | LiveVideo): VideoDto {
     return plainToInstance(VideoDto, {
       ...entity,
       related: entity.related?.items,
+      captions: entity.captions?.languages,
     });
   }
 }

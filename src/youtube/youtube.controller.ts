@@ -4,7 +4,6 @@ import {
   PlaylistCompactDto,
   PlaylistDto,
   PlaylistVideosDto,
-  TranscriptDto,
   VideoCompactDto,
   VideoDto,
 } from "@youtube/dtos";
@@ -44,14 +43,6 @@ export class YoutubeController {
     const video = await this.youtubei.getVideo(params.id);
     if (!video) throw new NotFoundException();
     return VideoDto.create(video);
-  }
-
-  @Get("/videos/:id/transcript")
-  @UseGuards(AuthGuard)
-  async getVideoTranscript(@Param() params: IdParams) {
-    const transcript = await this.youtubei.getVideoTranscript(params.id);
-    if (!transcript) throw new NotFoundException();
-    return transcript.map(TranscriptDto.create);
   }
 
   @Get("/videos")
